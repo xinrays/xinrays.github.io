@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: float | 黄心锐的个人博客</title>
+  <title>如何清除浮动与原理 | 黄心锐的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="黄心锐的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="黄心锐的个人博客">
-<meta property="og:url" content="http://yoursite.com/tags/float/index.html">
+  <meta name="description" content="清除浮动的几种方法">
+<meta name="keywords" content="清除浮动,伪类元素">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何清除浮动与原理">
+<meta property="og:url" content="http://yoursite.com/2018/04/15/floatClear/index.html">
 <meta property="og:site_name" content="黄心锐的个人博客">
-<meta property="og:description" content="黄心锐的个人博客">
+<meta property="og:description" content="清除浮动的几种方法">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-15T08:39:55.806Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="黄心锐的个人博客">
-<meta name="twitter:description" content="黄心锐的个人博客">
+<meta name="twitter:title" content="如何清除浮动与原理">
+<meta name="twitter:description" content="清除浮动的几种方法">
   
     <link rel="alternative" href="/atom.xml" title="黄心锐的个人博客" type="application/atom+xml">
   
@@ -153,60 +155,302 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-floatClear" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/13/float/" class="archive-article-date">
-  	<time datetime="2018-04-13T14:26:37.843Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/13/float/">浮动</a>
+    <h1 class="article-title" itemprop="name">
+      如何清除浮动与原理
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+	
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+	
+        <a href="/2018/04/15/floatClear/" class="archive-article-date">
+  	<time datetime="2018-04-15T08:39:55.806Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="清除浮动的几种方法"><a href="#清除浮动的几种方法" class="headerlink" title="清除浮动的几种方法"></a>清除浮动的几种方法</h1><a id="more"></a>
+<h2 id="第一种：overflow：hidden；"><a href="#第一种：overflow：hidden；" class="headerlink" title="第一种：overflow：hidden；"></a>第一种：overflow：hidden；</h2><p>overflow是规定当内容溢出元素框时会发生的事情，他拥有以下几个属性：</p>
+<table>
+<thead>
+<tr>
+<th>scroll</th>
+<th>当用户填写此属性时，如果内容溢出，会自动生成一个滚动条</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>visible</td>
+<td>当用户填写这个属性时，元素不会被修剪，不会出现滚动条，这个是此属性的默认值</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>当用户填写这个属性时，内容如果超过元素框的时候，会被修剪</td>
+</tr>
+<tr>
+<td>auto</td>
+<td>当用户填写此属性的时候，元素里面的内容如果被修剪过，则会出现滚动条，以便用户查看被修剪的内容</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>用户填写此属性时，从父级元素那里继承</td>
+</tr>
+</tbody>
+</table>
+<p>现在我们来说说overflow： hidden；是如何清楚浮动的：</p>
+<h3 id="浮动会使父级元素高度坍塌的原因"><a href="#浮动会使父级元素高度坍塌的原因" class="headerlink" title="浮动会使父级元素高度坍塌的原因"></a>浮动会使父级元素高度坍塌的原因</h3><p>要弄明白这个问题，我们要先弄懂浮动为什么会使父元素坍塌，因为body里面就相当于一个布局上下文，在里面进行布局的时候，元素是会互相影响到的，而如果你对一个元素设置了浮动的话，那么，被设置了浮动的元素会从当前的上下文中删除，形成一个新的布局上下文，此时这个浮动的元素就不会影响到块盒元素，而只会影响到内联元素了，所以此时父级获取不到子元素的高度，自然就会坍塌</p>
+<h3 id="overflow：hidden；为什么可以清除浮动"><a href="#overflow：hidden；为什么可以清除浮动" class="headerlink" title="overflow：hidden；为什么可以清除浮动"></a>overflow：hidden；为什么可以清除浮动</h3><p>overflow元素除了默认的visible值外，只要设置了其他的值，都会形成一个新的布局上下文，如果你在里面设置浮动的时候他们共同生成了一个新的布局上下文，现在他们处于同一个布局上下文了，所以父级元素也就不会坍塌了</p>
+<h3 id="overflow：hidden；后为什么高度是子元素的高度"><a href="#overflow：hidden；后为什么高度是子元素的高度" class="headerlink" title="overflow：hidden；后为什么高度是子元素的高度"></a>overflow：hidden；后为什么高度是子元素的高度</h3><p>按照我的理解，给一个元素生成新的布局上下文的时候，会先获取元素的height：auto；的值，也就是子元素的高度，然后使用这个值，然后overflow：hidden；的裁剪效果才会生效，所以新的上下文的高度就是子元素的高度了，如果父元素是固定宽高的话，那么height：auto；就不会生效</p>
+<h6 id="宽度坍塌的问题和高度大致是一样的，就不多讲了，不过按照上下文的逻辑，形成新的上下文就可以清除子元素的浮动，同理，如果你给父元素设置position：absolute；还有float，也是可以清除子元素的浮动的"><a href="#宽度坍塌的问题和高度大致是一样的，就不多讲了，不过按照上下文的逻辑，形成新的上下文就可以清除子元素的浮动，同理，如果你给父元素设置position：absolute；还有float，也是可以清除子元素的浮动的" class="headerlink" title="宽度坍塌的问题和高度大致是一样的，就不多讲了，不过按照上下文的逻辑，形成新的上下文就可以清除子元素的浮动，同理，如果你给父元素设置position：absolute；还有float，也是可以清除子元素的浮动的"></a>宽度坍塌的问题和高度大致是一样的，就不多讲了，不过按照上下文的逻辑，形成新的上下文就可以清除子元素的浮动，同理，如果你给父元素设置position：absolute；还有float，也是可以清除子元素的浮动的</h6><p>下面是用overflow：hidden；清楚浮动的例子<br>css部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">.centent&#123;</span><br><span class="line">	width: 500px;</span><br><span class="line">	margin: 50px auto;</span><br><span class="line">	border: 2px solid #000;</span><br><span class="line">&#125;</span><br><span class="line">.center&#123;</span><br><span class="line">	border: 2px solid yellow;</span><br><span class="line">	overflow: hidden;</span><br><span class="line">	float: left;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">	width: 100px;</span><br><span class="line">	height: 100px;</span><br><span class="line">	float: left;</span><br><span class="line">	background-color: red;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">	width: 100px;</span><br><span class="line">	height: 100px;</span><br><span class="line">	background-color: blue;</span><br><span class="line">	float: left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>html部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;centent&quot;&gt;</span><br><span class="line">	&lt;div class=&quot;center&quot;&gt;</span><br><span class="line">		&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="第二种：利用clear：both；清除浮动"><a href="#第二种：利用clear：both；清除浮动" class="headerlink" title="第二种：利用clear：both；清除浮动"></a>第二种：利用clear：both；清除浮动</h2><table>
+<thead>
+<tr>
+<th>none</th>
+<th>允许两边出现浮动对象，默认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>both</td>
+<td>两边都不允许出现浮动对象</td>
+</tr>
+<tr>
+<td>left</td>
+<td>左边不允许出现浮动对象</td>
+</tr>
+<tr>
+<td>right</td>
+<td>右边不允许出现浮动对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="利用元素来进行清除浮动"><a href="#利用元素来进行清除浮动" class="headerlink" title="利用元素来进行清除浮动"></a>利用元素来进行清除浮动</h3><p>利用元素来进行清楚浮动有两种放置方式<br>第一种：放置在盒子外部<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">		&lt;title&gt;demo2&lt;/title&gt;</span><br><span class="line">		&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">			.centent&#123;</span><br><span class="line">				width: 500px;</span><br><span class="line">				border: 2px solid #000;</span><br><span class="line">			&#125;</span><br><span class="line">			.left&#123;</span><br><span class="line">				width: 100px;</span><br><span class="line">				height: 100px;</span><br><span class="line">				float: left;</span><br><span class="line">				background: red;</span><br><span class="line">			&#125;</span><br><span class="line">			.right&#123;</span><br><span class="line">				width: 100px;</span><br><span class="line">				height: 100px;</span><br><span class="line">				float: left;</span><br><span class="line">				background: blue;</span><br><span class="line">			&#125;</span><br><span class="line">			.foot&#123;</span><br><span class="line">				width: 100%;</span><br><span class="line">				height: 30px;</span><br><span class="line">				background: yellow;</span><br><span class="line">			&#125;</span><br><span class="line">			.clear&#123;</span><br><span class="line">				clear: both;</span><br><span class="line">			&#125;</span><br><span class="line">		&lt;/style&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;div class=&quot;centent&quot;&gt;</span><br><span class="line">			&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</span><br><span class="line">			&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;foot&quot;&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>第一种方法虽然将浮动清除了，但是由于清除浮动用的div盒子是放置在需要父级盒子的外部，所以边框是不会被顶下来的</p>
+<p>第二种就是将盒子放在内部，就可以将border压下来了</p>
+<p>还有一种就是利用after来清除浮动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">		&lt;title&gt;demo2&lt;/title&gt;</span><br><span class="line">		&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">			.centent&#123;</span><br><span class="line">				width: 500px;</span><br><span class="line">				border: 2px solid #000;</span><br><span class="line">			&#125;</span><br><span class="line">			.left&#123;</span><br><span class="line">				width: 100px;</span><br><span class="line">				height: 100px;</span><br><span class="line">				float: left;</span><br><span class="line">				background: red;</span><br><span class="line">			&#125;</span><br><span class="line">			.right&#123;</span><br><span class="line">				width: 100px;</span><br><span class="line">				height: 100px;</span><br><span class="line">				float: left;</span><br><span class="line">				background: blue;</span><br><span class="line">			&#125;</span><br><span class="line">			.foot&#123;</span><br><span class="line">				width: 100%;</span><br><span class="line">				height: 30px;</span><br><span class="line">				background: yellow;</span><br><span class="line">			&#125;</span><br><span class="line">			.centent:after&#123;</span><br><span class="line">				display: table;</span><br><span class="line">				content: &quot;&quot;;</span><br><span class="line">				width: 0;</span><br><span class="line">				clear: both;</span><br><span class="line">			&#125;</span><br><span class="line">		&lt;/style&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;div class=&quot;centent&quot;&gt;</span><br><span class="line">			&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</span><br><span class="line">			&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;foot&quot;&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>还有就是利用伪类元素after来进行浮动的清除</p>
+<h2 id="第三种就是利用display：inline-block-来清除浮动"><a href="#第三种就是利用display：inline-block-来清除浮动" class="headerlink" title="第三种就是利用display：inline-block;来清除浮动"></a>第三种就是利用display：inline-block;来清除浮动</h2><p>给父级元素设置为display：inline-block；后，元素会变成内联块元素，会包裹住子元素，所以这种方式也可以用来清除浮动，不过不知道会不会引发别的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta charset=&quot;utf-8&quot; /&gt;</span><br><span class="line">		&lt;title&gt;清除浮动&lt;/title&gt;</span><br><span class="line">		&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">			.centent&#123;</span><br><span class="line">				width: 500px;</span><br><span class="line">				margin: 50px auto;</span><br><span class="line">				border: 2px solid #000;</span><br><span class="line">			&#125;</span><br><span class="line">			.center&#123;</span><br><span class="line">				border: 2px solid yellow;</span><br><span class="line">				display: inline-block;</span><br><span class="line">			&#125;</span><br><span class="line">			.left&#123;</span><br><span class="line">				width: 100px;</span><br><span class="line">				height: 100px;</span><br><span class="line">				float: left;</span><br><span class="line">				background-color: red;</span><br><span class="line">			&#125;</span><br><span class="line">			.right&#123;</span><br><span class="line">				width: 100px;</span><br><span class="line">				height: 100px;</span><br><span class="line">				background-color: blue;</span><br><span class="line">				float: left;</span><br><span class="line">			&#125;</span><br><span class="line">		&lt;/style&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;div class=&quot;centent&quot;&gt;</span><br><span class="line">			&lt;div class=&quot;center&quot;&gt;</span><br><span class="line">				&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</span><br><span class="line">				&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">			&lt;div style=&quot;width: 100px;height: 100px;background: yellow;&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">float</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">清除浮动,伪类元素</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/15/floatClear/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/04/13/canvasDown/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">canvas在图片上面加文字并下载为图片</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#清除浮动的几种方法"><span class="toc-number">1.</span> <span class="toc-text">清除浮动的几种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一种：overflow：hidden；"><span class="toc-number">1.1.</span> <span class="toc-text">第一种：overflow：hidden；</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浮动会使父级元素高度坍塌的原因"><span class="toc-number">1.1.1.</span> <span class="toc-text">浮动会使父级元素高度坍塌的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#overflow：hidden；为什么可以清除浮动"><span class="toc-number">1.1.2.</span> <span class="toc-text">overflow：hidden；为什么可以清除浮动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#overflow：hidden；后为什么高度是子元素的高度"><span class="toc-number">1.1.3.</span> <span class="toc-text">overflow：hidden；后为什么高度是子元素的高度</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#宽度坍塌的问题和高度大致是一样的，就不多讲了，不过按照上下文的逻辑，形成新的上下文就可以清除子元素的浮动，同理，如果你给父元素设置position：absolute；还有float，也是可以清除子元素的浮动的"><span class="toc-number">1.1.3.0.0.1.</span> <span class="toc-text">宽度坍塌的问题和高度大致是一样的，就不多讲了，不过按照上下文的逻辑，形成新的上下文就可以清除子元素的浮动，同理，如果你给父元素设置position：absolute；还有float，也是可以清除子元素的浮动的</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二种：利用clear：both；清除浮动"><span class="toc-number">1.2.</span> <span class="toc-text">第二种：利用clear：both；清除浮动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利用元素来进行清除浮动"><span class="toc-number">1.2.1.</span> <span class="toc-text">利用元素来进行清除浮动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三种就是利用display：inline-block-来清除浮动"><span class="toc-number">1.3.</span> <span class="toc-text">第三种就是利用display：inline-block;来清除浮动</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+
+
+
+
+
+
+	
+	<!-- ������City�氲װ���� -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTU4NS8xMjEyMQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> Ϊ����ʹ�����������۹����뼤��JavaScript</noscript>
+</div>
+<!-- City�氲װ���������� -->
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								       																																											             <!-- 目录内容结束 -->
 
 
           </div>
@@ -230,9 +474,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
